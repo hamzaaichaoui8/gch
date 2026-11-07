@@ -3,13 +3,15 @@
 #include <string.h>
 #include <stdlib.h>
 
-// goldhen_checker v1 — reports installed GoldHEN version on screen + log,
-// compares against /data/goldhen_checker/latest.txt if present.
-// Built with OpenORBIS (ghcr.io/openorbis/orbis-elf-builder), deployed to
+// goldhen_checker v1.0 — PS4 GoldHEN version checker
+// Code and design: (c) Hamza Aichaoui (from scratch, 2026)
+// Built with OpenOrbis (docker: openorbisofficial/toolchain), deployed to
 // /data/payloads/ and auto-loaded by GoldHEN at boot.
 //
 // NOTE: struct offsets for OrbisNotificationRequest must match the target
 // firmware headers; verify on first build against OpenORBIS latest.
+
+#define CREDIT "Hamza Aichaoui"
 
 #define GOLDHEN_BIN   "/data/GoldHEN/payloads/goldhen.bin"
 #define LOG_PATH      "/data/goldhen_checker.log"
@@ -106,7 +108,7 @@ int main(void)
 	int r = scan_installed_version(GOLDHEN_BIN, local, sizeof(local));
 	if (r < 0 || local[0] == 0)
 	{
-		snprintf(msg, sizeof(msg), "goldhen_checker: no goldhen.bin found (%d)", r);
+		snprintf(msg, sizeof(msg), "goldhen_checker by %s: no goldhen.bin (%d)", CREDIT, r);
 		notify(msg);
 		if (log)
 			fputs(msg, log);
@@ -128,11 +130,11 @@ int main(void)
 	}
 
 	if (outdated == 1)
-		snprintf(msg, sizeof(msg), "GoldHEN %s installed - update available: %s", local, latest);
+		snprintf(msg, sizeof(msg), "GoldHEN %s - update available: %s - checker by %s", local, latest, CREDIT);
 	else if (outdated == 0)
-		snprintf(msg, sizeof(msg), "GoldHEN %s installed - up to date", local);
+		snprintf(msg, sizeof(msg), "GoldHEN %s up to date - checker by %s", local, CREDIT);
 	else
-		snprintf(msg, sizeof(msg), "GoldHEN %s installed (no latest file)", local);
+		snprintf(msg, sizeof(msg), "GoldHEN %s installed - checker by %s", local, CREDIT);
 
 	notify(msg);
 	if (log)
