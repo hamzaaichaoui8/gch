@@ -1,6 +1,6 @@
 TOOLCHAIN   := $(OO_PS4_TOOLCHAIN)
 INTDIR      := build
-LIBS        := -lc -lkernel
+LIBS        := -lc -lkernel -lSceNet -lSceSsl -lSceHttp -lSceSysmodule
 
 CC          := clang
 LD          := ld.lld
