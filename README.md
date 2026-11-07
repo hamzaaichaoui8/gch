@@ -29,10 +29,22 @@
 
 ### 3) بناء البايلود (يتطلب Docker + WSL2)
 ```bat
-docker run --rm -v %cd%\goldhen_checker:/code ghcr.io/openorbis/orbis-elf-builder:latest cmake -B /code/build -S /code
-docker run --rm -v %cd%\goldhen_checker:/code ghcr.io/openorbis/orbis-elf-builder:latest cmake --build /code/build
+docker run --rm -w /workspace -v %cd%\goldhen_checker:/workspace -e OO_PS4_TOOLCHAIN=/lib/OpenOrbisSDK openorbisofficial/toolchain:latest make
 ```
-الناتج: `goldhen_checker/build/goldhen_checker.elf`
+الناتج: `goldhen_checker/goldhen_checker.oelf` (ارفعه إلى `/data/payloads/goldhen_checker.elf`)
+
+### 3.5) التحديث التلقائي (إصدار v2.0)
+- عند إقلاع الكونسول يجرّب البايلود جلب `latest.txt` من هذا المستودع (رابط raw).
+- إذا كان الإصدار الأخير على GitHub أحدث: **ينزّل `goldhen.bin` تلقائيًا**، يحفظ نسخة احتياطية `goldhen.bin.bak`، ويستبدل الملف ثم يقول: `RESTART console to activate`.
+- إذا كان محدّثًا: `You are on the latest GoldHEN version (x.y.z) - by hamza`.
+
+**مهمان ليعمل التنزيل التلقائي:**
+1. `latest.txt` و `goldhen.bin` موجودان في جذر هذا المستودع (فرع main).
+2. **المستودع عام (Public)** — الكونسول لا يستطيع قراءة مستودع خاص.
+
+**ملف `goldhen.ver`:** ملف نصي صغير يحمل رقم إصدار `goldhen.bin` المرفوع (مثال `2.4b18.13`).
+- `goldhen.bin` مشفّر ولا يمكن قراءة رقم إصداره من داخل الملف نفسه، لذلك نحفظ الرقم في ملف جانبي.
+- عندما يحدث البايلود تلقائيًا يكتبه بنفسه. وعند الرفع اليدوي عبر FTP ارفع `goldhen.ver` بالرقم الصحيح إلى `/data/GoldHEN/payloads/`.
 
 ### 4) أداة download0.dat (PS5 download0 على PS4-مستهدف)
 - تدعم نظام 5.00–13.04 فقط (كما ورد في سكربت الأداة الأصلي)؛ التحديثات 14.00+ لم تُستهدف بعد.
