@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-// goldhen_checker v1.0 — PS4 GoldHEN version checker
+// goldhen_checker v1.1 — PS4 GoldHEN version checker
 // Code and design: (c) Hamza Aichaoui (from scratch, 2026)
 // Built with OpenOrbis (docker: openorbisofficial/toolchain), deployed to
 // /data/payloads/ and auto-loaded by GoldHEN at boot.
@@ -11,11 +11,15 @@
 // NOTE: struct offsets for OrbisNotificationRequest must match the target
 // firmware headers; verify on first build against OpenORBIS latest.
 
-#define CREDIT "Hamza Aichaoui"
+#define CREDIT "hamza"
 
 #define GOLDHEN_BIN   "/data/GoldHEN/payloads/goldhen.bin"
 #define LOG_PATH      "/data/goldhen_checker.log"
 #define LATEST_PATH   "/data/goldhen_checker/latest.txt"
+#define STATE_DIR     "/data/goldhen_checker"
+#define STATE_PATH    "/data/goldhen_checker/active_version.txt"
+
+int sceKernelMkdir(const char *, unsigned int);
 
 struct OrbisNotificationRequest
 {
@@ -96,10 +100,40 @@ static int scan_installed_version(const char *path, char *out, int n)
 	return i;
 }
 
+// save the version seen this run so the next run can detect a swap
+static void save_state(const char *ver)
+{
+	sceKernelMkdir(STATE_DIR, 0777);
+	FILE *sf = fopen(STATE_PATH, "w");
+	if (sf)
+	{
+		fprintf(sf, "%s\n", ver);
+		fclose(sf);
+	}
+}
+
+// read the version recorded by the previous run ("last active")
+static int load_state(char *out, int n)
+{
+	FILE *sf = fopen(STATE_PATH, "rb");
+	if (!sf || !fgets(out, n, sf))
+	{
+		if (sf)
+			fclose(sf);
+		return -1;
+	}
+	fclose(sf);
+	char *nl = strpbrk(out, "\r\n");
+	if (nl)
+		*nl = 0;
+	return 0;
+}
+
 int main(void)
 {
 	char local[32] = "";
 	char latest[32] = "";
+	char saved[32] = "";
 	char msg[300];
 	FILE *log = fopen(LOG_PATH, "w");
 	if (log)
@@ -113,6 +147,23 @@ int main(void)
 		if (log)
 			fputs(msg, log);
 		return 1;
+	}
+
+	int have_saved = (load_state(saved, sizeof(saved)) == 0) && saved[0];
+	if (have_saved && strcmp(saved, local) != 0)
+	{
+		// goldhen.bin changed on disk since the last run:
+		// the running GoldHEN is still the old one -> reboot activates the new one
+		snprintf(msg, sizeof(msg),
+			"GoldHEN %s ready: RESTART console to activate it (was %s) - by %s",
+			local, saved, CREDIT);
+		notify(msg);
+		if (log)
+			fputs(msg, log);
+		save_state(local); // avoid repeating forever; a fully-activated boot ends this
+		if (log)
+			fclose(log);
+		return 0;
 	}
 
 	int outdated = -1; // unknown until we get a "latest"
@@ -130,15 +181,16 @@ int main(void)
 	}
 
 	if (outdated == 1)
-		snprintf(msg, sizeof(msg), "GoldHEN %s - update available: %s - checker by %s", local, latest, CREDIT);
+		snprintf(msg, sizeof(msg), "GoldHEN %s - update available: %s - by %s", local, latest, CREDIT);
 	else if (outdated == 0)
-		snprintf(msg, sizeof(msg), "GoldHEN %s up to date - checker by %s", local, CREDIT);
+		snprintf(msg, sizeof(msg), "GoldHEN %s up to date - by %s", local, CREDIT);
 	else
-		snprintf(msg, sizeof(msg), "GoldHEN %s installed - checker by %s", local, CREDIT);
+		snprintf(msg, sizeof(msg), "GoldHEN %s installed - by %s", local, CREDIT);
 
 	notify(msg);
 	if (log)
 		fprintf(log, "installed=%s latest=%s outdated=%d\n", local, latest, outdated);
+	save_state(local);
 	if (log)
 		fclose(log);
 	return 0;
