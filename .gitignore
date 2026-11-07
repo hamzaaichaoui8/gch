@@ -1,0 +1,7 @@
+*.dat
+backup/
+ftp_root/
+sleuthkit/
+extracted/
+*.log
+
