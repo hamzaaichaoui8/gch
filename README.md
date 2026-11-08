@@ -51,3 +51,5 @@
 ## 📦 PS4 Homebrew Direct Downloads
 - **Apollo Save Tool PKG:** [Direct Download](https://github.com/hamzaaichaoui8/gch/releases/download/v1.0-homebrew/IV0000-APOL00004_00-APOLLO0000000PS4.pkg)
 - **PS4-Xplorer 2.04 PKG:** [Direct Download](https://github.com/hamzaaichaoui8/gch/releases/download/v1.0-homebrew/PS4_LAPY20009_v2.04.pkg)
+
+- **PS4-Xplorer 2.07 PKG (60MB):** [PS4_LAPY20009_v2.07.pkg](./PS4_LAPY20009_v2.07.pkg)
