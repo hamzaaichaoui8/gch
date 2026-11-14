@@ -1,56 +1,39 @@
-# gch — مستودع تحديث GoldHEN التلقائي
+# gch - Auto Update for GoldHEN
 
-> **صانع المشروع: Hamza Aichaoui (by hamza)**
+Made by **Hamza Aichaoui**.
 
-هذا المستودع مخصص فقط لشيء واحد: **التحميل الأوتوماتيكي لإصدار GoldHEN الأحدث من خلال بايلودنا الخاص `goldhen_checker`** المثبّت على الكونسول (`/data/payloads/goldhen_checker.elf`).
+This repo keeps the latest GoldHEN file for my console payload `goldhen_checker`.
 
-## كيف يعمل؟
+## How it works
 
-عند إقلاع الكونسول يقرأ البايلود `latest.txt` من هذا المستودع ويقارنه بالإصدار المثبّت:
+When the console starts, the payload reads `latest.txt` from this repo and compares it with the installed version.
 
-- **محدّث؟** → تظهر رسالة على الشاشة: `You are on the latest GoldHEN version (x.y.z) - by hamza`
-- **يوجد إصدار أحدث؟** → ينزّل البايلود `goldhen.bin` من هنا **تلقائيًا**، يحفظ نسخة احتياطية `goldhen.bin.bak`، ويستبدل الملف، ثم يطلب منك: `RESTART console to activate it - by hamza`
+- **Up to date:** you see `You are on the latest GoldHEN version (x.y.z) - by hamza`.
+- **New version found:** the payload downloads `goldhen.bin`, saves a backup (`goldhen.bin.bak`), replaces the file, and shows `RESTART console to activate it - by hamza`.
 
-## ملفات المستودع (كل ما تحتاجه)
+## Supported firmware
 
-| الملف | دورة الحياة |
-|-------|-------------|
-| `goldhen.bin` | **إجباري** — الملف الذي **ينزّله الكونسول تلقائيًا من هذا المستودع**. يُرفع هنا خامًا غير مضغوط، لأن فك ضغط حزم 7z يحدث على الحاسوب عند الرفع اليدوي فقط |
-| `latest.txt` | **إجباري** — سطر واحد فقط: رقم أحدث إصدار (مثال `2.4b18.14`) |
-| `goldhen.ver` | على الكونسول فقط (`/data/GoldHEN/payloads/`) — يحمل رقم الإصدار المرفوع يدويًا (البايلود يكتبه نفسه بعد كل تحديث تلقائي) |
-
-عند رفع إصدار جديد يدويًا عبر FTP: ارفع `goldhen.bin` وبجانبه `goldhen.ver` بالرقم الصحيح. لا شيء آخر مطلوب.
-
-## الإصدارات — دعم إصدارات PS4 Firmware
-
-| إصدار GoldHEN | إصدار Firmware المدعوم |
-|----------------|--------------------------|
+| GoldHEN version | Supported PS4 firmware |
+| --- | --- |
 | **v2.4b18.14** | **14.00 / 14.02** |
-| v2.4b18.13 | **14.00** (يضاف لدعم واسع لكل الأنظمة الأقدم — وفق README الرسمي: 5.05 → 12.52) |
+| v2.4b18.13 | 14.00 (plus older firmware, 5.05 to 12.52) |
 | v2.4b18.12 | 13.02 / 13.04 / 13.50 |
 | v2.4b18.11 | 13.52 |
-| v2.4b18.10 | 13.02 (تشغيل PayLoader) |
+| v2.4b18.10 | 13.02 |
 | v2.4b18.9 | 13.00 |
 | v2.4b18.7 | 12.50 / 12.52 |
 | v2.4b18.5 | 11.5x |
 | v2.4b18.4 | 11.0x |
 | v2.4b18.1 | 11.00 |
 | v2.4b17.x | 5.05 / 6.72 / 9.00 / 11.00 |
-| v2.4b16 وما قبله | 5.05 / 6.72 / 9.00 / 10.00 / 10.01 |
-| v2.3 | 5.05 / 6.72 / 9.00 |
-| v2.2.x | 5.05 / 6.72 / 9.00 |
-| v2.0 – v2.1.x | 5.05 / 6.72 / 9.00 |
-| v1.x (الإصدارات القديمة) | 5.05 / 6.72 |
+| v2.4b16 and older | 5.05 / 6.72 / 9.00 / 10.00 / 10.01 |
+| v2.0 - v2.3 | 5.05 / 6.72 / 9.00 |
+| v1.x | 5.05 / 6.72 |
 
-تفاصيل كل إصدار وشرح ميزاته: [منشورات SiSTR0 على Ko-fi](https://ko-fi.com/sistro/posts).
+Release notes: [SiSTR0 posts on Ko-fi](https://ko-fi.com/sistro/posts)
 
----
+## PS4 homebrew downloads
 
-*التحميل التلقائي والتدقيق من صنع: **Hamza Aichaoui**.*
-
-
-## 📦 PS4 Homebrew Direct Downloads
-- **Apollo Save Tool PKG:** [Direct Download](https://github.com/hamzaaichaoui8/gch/releases/download/v1.0-homebrew/IV0000-APOL00004_00-APOLLO0000000PS4.pkg)
-- **PS4-Xplorer 2.04 PKG:** [Direct Download](https://github.com/hamzaaichaoui8/gch/releases/download/v1.0-homebrew/PS4_LAPY20009_v2.04.pkg)
-
-- **PS4-Xplorer 2.07 PKG (60MB):** [PS4_LAPY20009_v2.07.pkg](./PS4_LAPY20009_v2.07.pkg)
+- [Apollo Save Tool PKG](https://github.com/hamzaaichaoui8/gch/releases/download/v1.0-homebrew/IV0000-APOL00004_00-APOLLO0000000PS4.pkg)
+- [PS4-Xplorer 2.04 PKG](https://github.com/hamzaaichaoui8/gch/releases/download/v1.0-homebrew/PS4_LAPY20009_v2.04.pkg)
+- [PS4-Xplorer 2.07 PKG (60 MB)](https://github.com/hamzaaichaoui8/gch/blob/main/PS4_LAPY20009_v2.07.pkg)
