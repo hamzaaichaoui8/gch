@@ -16,7 +16,7 @@ When the console starts, the payload reads `latest.txt` from this repo and compa
 | GoldHEN version | Supported PS4 firmware |
 | --- | --- |
 | **v2.4b18.14** | **14.00 / 14.02** |
-| v2.4b18.13 | 14.00 (plus older firmware, 5.05 to 12.52) |
+| v2.4b18.13 | 14.00 |
 | v2.4b18.12 | 13.02 / 13.04 / 13.50 |
 | v2.4b18.11 | 13.52 |
 | v2.4b18.10 | 13.02 |
