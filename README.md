@@ -35,5 +35,4 @@ Release notes: [SiSTR0 posts on Ko-fi](https://ko-fi.com/sistro/posts)
 ## PS4 homebrew downloads
 
 - [Apollo Save Tool PKG](https://github.com/hamzaaichaoui8/gch/releases/download/v1.0-homebrew/IV0000-APOL00004_00-APOLLO0000000PS4.pkg)
-- [PS4-Xplorer 2.04 PKG](https://github.com/hamzaaichaoui8/gch/releases/download/v1.0-homebrew/PS4_LAPY20009_v2.04.pkg)
 - [PS4-Xplorer 2.07 PKG (60 MB)](https://github.com/hamzaaichaoui8/gch/blob/main/PS4_LAPY20009_v2.07.pkg)
