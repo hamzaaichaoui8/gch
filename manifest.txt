@@ -2,4 +2,4 @@
 version=2.4b18.14
 app=/user/app/IV0000-APOL00004|/data/pkg/apollo_save_tool.pkg|https://raw.githubusercontent.com/hamzaaichaoui8/gch/main/Apollo_Save_Tool.pkg
 app=/user/app/PS4_LAPY20009|/data/pkg/ps4_xplorer_2.07.pkg|https://raw.githubusercontent.com/hamzaaichaoui8/gch/main/PS4_LAPY20009_v2.07.pkg
-file=39452f5e1c305ac9efcb4745eef7958b4db8c6d85299529f08700970b009ea4d|297496|1|/data/GoldHEN/payloads/goldhen.bin;/data/payload.bin|https://raw.githubusercontent.com/hamzaaichaoui8/gch/main/goldhen.bin
+file=c5480587d99efc2e3cc132352d9b7cf052dd3068280f1686e7fbb37d57e9ba8b|298776|1|/data/GoldHEN/payloads/goldhen.bin;/data/payload.bin|https://raw.githubusercontent.com/hamzaaichaoui8/gch/main/goldhen.bin
